@@ -19,7 +19,9 @@ class Verbose:
         """
 
         val = object.__getattribute__(self, '_val')
+
         logger.info(f"Returned value {val}")
+
         return val
 
     __getitem__ = get_value
@@ -31,6 +33,7 @@ class Verbose:
 
     def __len__(self):
         logger.info("Calculating length")
+
         if isinstance(self.get_value(), type(self)):
             return len(self.get_value()) + 1
         return 1
