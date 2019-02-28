@@ -7,14 +7,19 @@ def config():
 
 
 COMMENT = '# '
+LOGGER = 'logger'
 
 
 def is_commented(line):
-    return line.startswith(COMMENT)
+    return line.lstrip().startswith(COMMENT)
 
 
-def comment(line):
-    return COMMENT + line
+def comment(line, pos):
+    return line[:pos] + COMMENT + line[pos:]
+
+
+def comment_logging(line):
+    return comment(line, line.find(LOGGER))
 
 
 def uncomment(line):
@@ -22,7 +27,7 @@ def uncomment(line):
 
 
 def is_logging(line):
-    return 'logger.info' in line
+    return LOGGER in line
 
 
 def set_logging(log):
@@ -33,7 +38,7 @@ def set_logging(log):
             if log and is_commented(lines[i]):
                 lines[i] = uncomment(lines[i])
             if not log and not is_commented(lines[i]):
-                lines[i] = comment(lines[i])
+                lines[i] = comment_logging(lines[i])
     with open('verbose.py', 'w') as f:
         f.writelines(lines)
 
