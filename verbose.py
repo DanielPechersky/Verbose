@@ -12,13 +12,13 @@ class Verbose:
 
         logger.info(f"Verbosified value {self._val}")
 
-    def get_value(self, *args_, **kwargs_):
+    def get_value(self, *_args, **_kwargs):
         """
         Gets the value
         :return: the value
         """
 
-        del args_, kwargs_
+        del _args, _kwargs
 
         val = object.__getattribute__(self, '_val')
 
