@@ -6,11 +6,11 @@ logger = logging.getLogger(__name__)
 class Verbose:
     def __init__(self, val, levels=1):
         if levels == 1:
-            self._val = val
+            self.v = val
         else:
-            self._val = self.__class__(val, levels-1)
+            self.v = type(self)(val, levels-1)
 
-        logger.info(f"Verbosified value {self._val}")
+        logger.info(f"Verbosified value {self.v}")
 
     def get_value(self, *_args, **_kwargs):
         """
@@ -26,16 +26,21 @@ class Verbose:
 
         return val
 
+    def __setattr__(self, _, val):
+        object.__setattr__(self, '_val', val)
+
+        logger.info(f"Set the value to {val}")
+
     __getitem__ = get_value
-    __getattr__ = get_value
+    __getattribute__ = get_value
     __call__ = get_value
 
     def __repr__(self):
-        return f"{type(self).__name__}({repr(self.get_value())})"
+        return f"{type(self).__name__}({repr(self.v)})"
 
     def __len__(self):
         logger.info("Calculating length")
 
-        if isinstance(self.get_value(), type(self)):
-            return len(self.get_value()) + 1
+        if isinstance(self.v, type(self)):
+            return len(self.v) + 1
         return 1
