@@ -27,6 +27,8 @@ class Verbose:
     __getitem__ = __getattribute__
     __call__ = __getattribute__
 
+    __setitem__ = __setattr__
+
     def __repr__(self):
         return f"{type(self).__name__}({repr(self.v)})"
 
