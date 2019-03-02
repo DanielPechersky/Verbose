@@ -12,14 +12,7 @@ class Verbose:
 
         logger.info(f"Verbosified value {self.v}")
 
-    def get_value(self, *_args, **_kwargs):
-        """
-        Gets the value
-        :return: the value
-        """
-
-        del _args, _kwargs
-
+    def __getattribute__(self, _):
         val = object.__getattribute__(self, '_val')
 
         logger.info(f"Returned value {val}")
@@ -31,9 +24,8 @@ class Verbose:
 
         logger.info(f"Set the value to {val}")
 
-    __getitem__ = get_value
-    __getattribute__ = get_value
-    __call__ = get_value
+    __getitem__ = lambda self: self.x
+    __call__ = lambda self: self.x
 
     def __repr__(self):
         return f"{type(self).__name__}({repr(self.v)})"
