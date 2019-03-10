@@ -41,4 +41,3 @@ def set_logging(log):
                 lines[i] = comment_logging(lines[i])
     with open('verbose.py', 'w') as f:
         f.writelines(lines)
-
