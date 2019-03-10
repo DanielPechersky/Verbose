@@ -29,6 +29,9 @@ class Verbose:
 
     __setitem__ = __setattr__
 
+    def __dir__(self):
+        return []
+
     def __repr__(self):
         return f"{type(self).__name__}({repr(self.v)})"
 
